@@ -329,7 +329,7 @@ class FoodAIApp(ctk.CTk):
 
             self.after(0, self.aggiorna_ragionamento, "📡 Ricerca nel grafo (GraphDB)...")
             headers = {'Accept': 'application/sparql-results+json'}
-            risposta_db = requests.get(GRAPHDB_URL, params={'query': query_finale}, headers=headers)
+            risposta_db = requests.post(GRAPHDB_URL, data={'query': query_finale}, headers=headers, timeout=60.0)
             risposta_db.raise_for_status()
             
             dati_json = risposta_db.json()
