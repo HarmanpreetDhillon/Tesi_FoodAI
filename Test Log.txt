@@ -1,0 +1,459 @@
+[06/10/2026 - 10:01:06]
+Domanda :  "Mostrami ricette per pancake alla banana"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nomeRicetta WHERE {
+     ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+     ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+     ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> [] .
+     FILTER(CONTAINS(LCASE(STR(?nomeRicetta)), "banana") && CONTAINS(LCASE(STR(?nomeRicetta)), "pancake"))
+} LIMIT 50
+
+[06/10/2026 - 10:01:52]
+Domanda : "Quali piatti posso preparare con pollo e riso?"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nomeRicetta WHERE {
+     ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+     ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+     ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ing1 .
+     ?ing1 <http://www.w3.org/2000/01/rdf-schema#label> ?nomeIng1 .
+     ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ing2 .
+     ?ing2 <http://www.w3.org/2000/01/rdf-schema#label> ?nomeIng2 .
+     FILTER(CONTAINS(LCASE(STR(?nomeIng1)), "chicken"))
+     FILTER(CONTAINS(LCASE(STR(?nomeIng2)), "rice"))
+} LIMIT 50
+
+[06/10/2026 - 10:02:50]
+Domanda : "Cerco una ricetta per una zuppa di pomodoro"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nomeRicetta WHERE {
+    ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+    ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+    ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ingrediente .
+    ?ingrediente <http://www.w3.org/2000/01/rdf-schema#label> ?nomeIngrediente .
+    FILTER(CONTAINS(LCASE(STR(?nomeRicetta)), "soup") && CONTAINS(LCASE(STR(?nomeIngrediente)), "tomato"))
+} LIMIT 50
+
+[06/10/2026 - 10:03:42]
+Domanda : "Mostrami preparazioni per fare i biscotti al cioccolato"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nomeRicetta WHERE {
+     ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+     ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+     ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> [] .
+     FILTER(CONTAINS(LCASE(STR(?nomeRicetta)), "chocolate") && CONTAINS(LCASE(STR(?nomeRicetta)), "cookie"))
+} LIMIT 50
+
+[06/10/2026 - 10:05:15]
+Domanda : "Cosa posso cucinare a base di salmone?"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nomeRicetta WHERE {
+    ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+     ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+     ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ingrediente .
+     ?ingrediente <http://www.w3.org/2000/01/rdf-schema#label> ?nomeIngrediente .
+     FILTER(CONTAINS(LCASE(STR(?nomeIngrediente)), "salmon"))
+} LIMIT 50
+
+
+[06/10/2026 - 10:08:43]
+Domanda : "Quali dolci o pancake posso preparare senza latte?"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nomeRicetta WHERE {
+    ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+    ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+    ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> [] .
+    FILTER((CONTAINS(LCASE(STR(?nomeRicetta)), "dessert") || CONTAINS(LCASE(STR(?nomeRicetta)), "cake") || CONTAINS(LCASE(STR(?nomeRicetta)), "pancake")) && !CONTAINS(LCASE(STR(?nomeRicetta)), "mix"))
+    MINUS {
+        ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ingrMale .
+        ?ingrMale <http://www.w3.org/2000/01/rdf-schema#label> ?nomeMale .
+        ?ingrMale <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?foodon .
+        ?foodon <http://www.w3.org/2000/01/rdf-schema#label> ?famiglia .
+        FILTER(CONTAINS(LCASE(STR(?famiglia)), "dairy") || CONTAINS(LCASE(STR(?famiglia)), "milk") || CONTAINS(LCASE(STR(?nomeMale)), "milk")
+        )
+    }
+} LIMIT 50
+
+[06/10/2026 - 10:10:23]
+Domanda : "Trova zuppe senza carne"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nomeRicetta WHERE {
+    ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+    ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+    ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> [] .
+    FILTER(CONTAINS(LCASE(STR(?nomeRicetta)), "soup"))
+    MINUS {
+        ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ingrMale .
+        ?ingrMale <http://www.w3.org/2000/01/rdf-schema#label> ?nomeMale .
+        ?ingrMale <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?foodon .
+        ?foodon <http://www.w3.org/2000/01/rdf-schema#label> ?famiglia .
+        FILTER( CONTAINS(LCASE(STR(?famiglia)), "meat") || CONTAINS(LCASE(STR(?famiglia)), "poultry") || CONTAINS(LCASE(STR(?famiglia)), "vertebrate") ||  CONTAINS(LCASE(STR(?nomeMale)), "meat") || CONTAINS(LCASE(STR(?nomeMale)), "beef") || CONTAINS(LCASE(STR(?nomeMale)), "chicken") || CONTAINS(LCASE(STR(?nomeMale)), "pork") || CONTAINS(LCASE(STR(?nomeMale)), "bacon")
+        )
+    }
+} LIMIT 50
+
+[06/10/2026 - 10:12:54]
+Domanda : "Cerco ricette per torte senza burro"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nomeRicetta WHERE {
+    ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+    ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+    ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> [] .
+    FILTER(CONTAINS(LCASE(STR(?nomeRicetta)), "cake") || CONTAINS(LCASE(STR(?nomeRicetta)), "pie") || CONTAINS(LCASE(STR(?nomeRicetta)), "tart"))
+    MINUS {
+        ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ingrMale .
+        ?ingrMale <http://www.w3.org/2000/01/rdf-schema#label> ?nomeMale .
+        ?ingrMale <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?foodon .
+        ?foodon <http://www.w3.org/2000/01/rdf-schema#label> ?famiglia .
+        FILTER(
+            CONTAINS(LCASE(STR(?famiglia)), "butter") ||
+            CONTAINS(LCASE(STR(?nomeMale)), "butter")
+        )
+    }
+} LIMIT 50
+
+[06/10/2026 - 10:15:26]
+Domanda :  "Quali ricette posso cucinare senza uova?"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nomeRicetta WHERE {
+    ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+    ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+    ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> [] .
+    MINUS {
+        ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ingrMale .
+        ?ingrMale <http://www.w3.org/2000/01/rdf-schema#label> ?nomeMale .
+        ?ingrMale <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?foodon .
+        ?foodon <http://www.w3.org/2000/01/rdf-schema#label> ?famiglia .
+        FILTER(
+            CONTAINS(LCASE(STR(?famiglia)), "egg") ||
+            CONTAINS(LCASE(STR(?nomeMale)), "egg")
+        )
+    }
+} LIMIT 50
+
+[06/10/2026 - 10:18:36]
+Domanda :  "Mostrami piatti senza glutine e senza farina di frumento"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nomeRicetta WHERE {
+    ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+    ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+    ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> [] .
+    MINUS {
+        ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ingrMale .
+        ?ingrMale <http://www.w3.org/2000/01/rdf-schema#label> ?nomeMale .
+        ?ingrMale <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?foodon .
+        ?foodon <http://www.w3.org/2000/01/rdf-schema#label> ?famiglia .
+        FILTER(
+            CONTAINS(LCASE(STR(?famiglia)), "wheat") || CONTAINS(LCASE(STR(?famiglia)), "gluten") || CONTAINS(LCASE(STR(?famiglia)), "cereal") || CONTAINS(LCASE(STR(?nomeMale)), "gluten") || CONTAINS(LCASE(STR(?nomeMale)), "wheat") || CONTAINS(LCASE(STR(?nomeMale)), "flour")
+        )
+    }
+} LIMIT 50
+
+[06/10/2026 - 10:21:19]
+Domanda :  "Qual è l'apporto di grassi e carboidrati negli ingredienti della carbonara?"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nomeRicetta ?nome ?grassi ?carboidrati WHERE {
+    ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+    ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+    FILTER(CONTAINS(LCASE(STR(?nomeRicetta)), "carbonara"))
+    ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ingrediente .
+    ?ingrediente <http://www.w3.org/2000/01/rdf-schema#label> ?nome .
+    ?ingrediente <http://tesi.unibs.it/ontology#hasNutritionProfile> ?usda .
+    OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasFat> ?grassi . }
+    OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasCarb> ?carboidrati . }
+} LIMIT 50
+
+[06/10/2026 - 10:28:29]
+Domanda :  "Quali ingredienti della famiglia della frutta a guscio ('nut') o dei semi ('seed') mi consigli per avere tante proteine? Dimmi calorie, proteine e grassi."
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nome ?calorie ?proteine ?grassi WHERE {
+    ?ingrediente <http://www.w3.org/2000/01/rdf-schema#label> ?nome .
+    ?ingrediente <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?foodon .
+    ?foodon <http://www.w3.org/2000/01/rdf-schema#subClassOf>* ?genitore .
+    ?genitore <http://www.w3.org/2000/01/rdf-schema#label> ?famiglia .
+    FILTER(CONTAINS(LCASE(STR(?famiglia)), "nut") || CONTAINS(LCASE(STR(?famiglia)), "seed") || CONTAINS(LCASE(STR(?nome)), "nut") || CONTAINS(LCASE(STR(?nome)), "seed"))
+    FILTER(!CONTAINS(LCASE(STR(?nome)), "mix"))
+    ?ingrediente <http://tesi.unibs.it/ontology#hasNutritionProfile> ?usda .
+    OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasCalories> ?calorie . }
+    OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasProtein> ?proteine . }
+    OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasFat> ?grassi . }
+}
+ORDER BY DESC(?proteine)
+LIMIT 50
+
+[06/10/2026 - 10:32:47]
+Domanda :  "Quali sono i valori nutrizionali e le calorie degli ingredienti della torta di mele?"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+SELECT DISTINCT ?nomeRicetta ?nome ?calorie ?proteine ?grassi ?carboidrati WHERE {
+    ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+    ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+    FILTER(CONTAINS(LCASE(STR(?nomeRicetta)), "apple") && CONTAINS(LCASE(STR(?nomeRicetta)), "pie"))
+    ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ingrediente .
+    ?ingrediente <http://www.w3.org/2000/01/rdf-schema#label> ?nome .
+    OPTIONAL {
+        ?ingrediente <http://tesi.unibs.it/ontology#hasNutritionProfile> ?usda .
+        OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasCalories> ?calorie . }
+        OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasProtein> ?proteine . }
+        OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasFat> ?grassi . }
+        OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasCarb> ?carboidrati . }
+    }
+} LIMIT 50
+
+[06/10/2026 - 10:38:54]
+Domanda :  "Mostrami il profilo calorico e la quota proteica degli ingredienti delle lasagne"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+SELECT DISTINCT ?nomeRicetta ?nome ?calorie ?proteine WHERE {
+    ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+    ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+    FILTER(CONTAINS(LCASE(STR(?nomeRicetta)), "lasagna") || CONTAINS(LCASE(STR(?nomeRicetta)), "lasagne"))
+    ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ingrediente .
+    ?ingrediente <http://www.w3.org/2000/01/rdf-schema#label> ?nome .
+    ?ingrediente <http://tesi.unibs.it/ontology#hasNutritionProfile> ?usda .
+    OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasCalories> ?calorie . }
+    OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasProtein> ?proteine . }
+} LIMIT 50
+
+[06/10/2026 - 10:42:27]
+Domanda :  "Quali sono le calorie degli ingredienti della Fresh Tomato Soup?"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+SELECT DISTINCT ?nomeRicetta ?nome ?calorie ?proteine ?grassi ?carboidrati WHERE {
+    ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+    ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+    FILTER(CONTAINS(LCASE(STR(?nomeRicetta)), "fresh") && CONTAINS(LCASE(STR(?nomeRicetta)), "tomato") && CONTAINS(LCASE(STR(?nomeRicetta)), "soup"))
+    ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ingrediente .
+    ?ingrediente <http://www.w3.org/2000/01/rdf-schema#label> ?nome .
+    ?ingrediente <http://tesi.unibs.it/ontology#hasNutritionProfile> ?usda .
+    OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasCalories> ?calorie . }
+    OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasProtein> ?proteine . }
+    OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasFat> ?grassi . }
+    OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasCarb> ?carboidrati . }
+} LIMIT 50
+ 
+[06/10/2026 - 10:44:15]
+Domanda : "Quali legumi posso usare come fonte proteica alternativa?"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+SELECT DISTINCT ?nome ?calorie ?proteine ?grassi ?carboidrati WHERE {
+    ?ingrediente <http://www.w3.org/2000/01/rdf-schema#label> ?nome .
+    ?ingrediente <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?foodon .
+    ?foodon <http://www.w3.org/2000/01/rdf-schema#subClassOf>* ?genitore .
+    ?genitore <http://www.w3.org/2000/01/rdf-schema#label> ?famiglia .
+    OPTIONAL {
+        ?ingrediente <http://tesi.unibs.it/ontology#hasNutritionProfile> ?usda .
+        OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasCalories> ?calorie . }
+        OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasProtein> ?proteine . }
+        OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasFat> ?grassi . }
+        OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasCarb> ?carboidrati . }
+    }
+    FILTER(CONTAINS(LCASE(STR(?famiglia)), "legume") || CONTAINS(LCASE(STR(?famiglia)), "lentil") ||CONTAINS(LCASE(STR(?famiglia)), "pea") || CONTAINS(LCASE(STR(?famiglia)), "bean") || CONTAINS(LCASE(STR(?nome)), "lentil") ||
+CONTAINS(LCASE(STR(?nome)), "pea") || CONTAINS(LCASE(STR(?nome)), "chickpea") || CONTAINS(LCASE(STR(?nome)), "bean")
+    )
+    FILTER(!CONTAINS(LCASE(STR(?nome)), "mix"))
+} LIMIT 50
+
+[06/10/2026 - 10:48:32]
+Domanda :  "Trova dei dolcificanti o sostituti dello zucchero"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nome ?calorie ?proteine ?grassi ?carboidrati WHERE {
+    ?ingrediente <http://www.w3.org/2000/01/rdf-schema#label> ?nome .
+    ?ingrediente <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?foodon .
+    ?foodon <http://www.w3.org/2000/01/rdf-schema#subClassOf>* ?genitore .
+    ?genitore <http://www.w3.org/2000/01/rdf-schema#label> ?famiglia .
+    OPTIONAL {
+        ?ingrediente <http://tesi.unibs.it/ontology#hasNutritionProfile> ?usda .
+        OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasCalories> ?calorie . }
+        OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasProtein> ?proteine . }
+        OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasFat> ?grassi . }
+        OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasCarb> ?carboidrati . }
+    }
+    FILTER(
+        CONTAINS(LCASE(STR(?famiglia)), "sweetener") || CONTAINS(LCASE(STR(?famiglia)), "sugar substitute") || CONTAINS(LCASE(STR(?nome)), "sweetener") || CONTAINS(LCASE(STR(?nome)), "xylitol") || CONTAINS(LCASE(STR(?nome)), "stevia")
+    )
+    FILTER(!CONTAINS(LCASE(STR(?nome)), "mix"))
+} LIMIT 50
+ 
+[06/10/2026 - 10:51:49]
+Domanda :  "Quali tipi di frutta secca o noci sono disponibili nel database?"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nome WHERE {
+    ?ingrediente <http://www.w3.org/2000/01/rdf-schema#label> ?nome .
+    ?ingrediente <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?foodon .
+    ?foodon <http://www.w3.org/2000/01/rdf-schema#subClassOf>* ?genitore .
+    ?genitore <http://www.w3.org/2000/01/rdf-schema#label> ?famiglia .
+    FILTER(CONTAINS(LCASE(STR(?famiglia)), "nut") ||  CONTAINS(LCASE(STR(?famiglia)), "tree nut") ||  CONTAINS(LCASE(STR(?nome)), "nut") || CONTAINS(LCASE(STR(?nome)), "walnut") || CONTAINS(LCASE(STR(?nome)), "hazelnut") || CONTAINS(LCASE(STR(?nome)), "almond") || CONTAINS(LCASE(STR(?nome)), "cashew") || CONTAINS(LCASE(STR(?nome)), "pistachio")
+    )
+    FILTER(!CONTAINS(LCASE(STR(?nome)), "mix"))
+} LIMIT 50
+
+
+[06/10/2026 - 10:55:22]
+Domanda :  "Quali alternative vegetali al latte vaccino posso trovare?"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nome WHERE {
+    ?ingrediente <http://www.w3.org/2000/01/rdf-schema#label> ?nome .
+    ?ingrediente <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?foodon .
+    ?foodon <http://www.w3.org/2000/01/rdf-schema#subClassOf>* ?genitore .
+    ?genitore <http://www.w3.org/2000/01/rdf-schema#label> ?famiglia .
+    FILTER(
+        (CONTAINS(LCASE(STR(?famiglia)), "plant milk") || CONTAINS(LCASE(STR(?famiglia)), "soy milk") || CONTAINS(LCASE(STR(?famiglia)), "nut milk") || CONTAINS(LCASE(STR(?nome)), "plant milk") || CONTAINS(LCASE(STR(?nome)), "soy milk") || CONTAINS(LCASE(STR(?nome)), "oat milk") || CONTAINS(LCASE(STR(?nome)), "rice milk") || CONTAINS(LCASE(STR(?nome)), "almond milk") || CONTAINS(LCASE(STR(?nome)), "coconut milk")
+        ) && !CONTAINS(LCASE(STR(?nome)), "mix")
+    )
+} LIMIT 50
+ 
+[06/10/2026 - 10:59:26]
+Domanda :  "Mostrami tipi di amidi presenti nel database"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nome ?calorie ?proteine ?grassi ?carboidrati ?famiglia WHERE {
+    ?ingrediente <http://www.w3.org/2000/01/rdf-schema#label> ?nome .
+    FILTER(!CONTAINS(LCASE(STR(?nome)), "mix"))
+    ?ingrediente <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?foodon .
+    ?foodon <http://www.w3.org/2000/01/rdf-schema#subClassOf>* ?genitore .
+    ?genitore <http://www.w3.org/2000/01/rdf-schema#label> ?famiglia .
+    FILTER(
+        CONTAINS(LCASE(STR(?famiglia)), "starch") || CONTAINS(LCASE(STR(?nome)), "starch") || CONTAINS(LCASE(STR(?nome)), "cornstarch") || CONTAINS(LCASE(STR(?nome)), "arrowroot") || CONTAINS(LCASE(STR(?nome)), "tapioca")
+    )
+    OPTIONAL {
+        ?ingrediente <http://tesi.unibs.it/ontology#hasNutritionProfile> ?usda .
+        OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasCalories> ?calorie . }
+        OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasProtein> ?proteine . }
+        OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasFat> ?grassi . }
+        OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasCarb> ?carboidrati . }
+    }
+} LIMIT 50
+ 
+[06/10/2026 - 11:10:43]
+Domanda :  "Trova ricette a base di carne di struzzo"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nomeRicetta WHERE {
+    ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+    ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+    ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ingrediente .
+    ?ingrediente <http://www.w3.org/2000/01/rdf-schema#label> ?nomeIngrediente .
+    FILTER(CONTAINS(LCASE(STR(?nomeIngrediente)), "ostrich"))
+} LIMIT 50
+
+ 
+[06/10/2026 - 11:12:23]
+Domanda : "Quali piatti contengono carne di canguro e mango?"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nomeRicetta WHERE {
+    ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+    ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+    ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ingrediente1 .
+    ?ingrediente1 <http://www.w3.org/2000/01/rdf-schema#label> ?nome1 .
+    FILTER(CONTAINS(LCASE(STR(?nome1)), "kangaroo"))
+    ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ingrediente2 .
+    ?ingrediente2 <http://www.w3.org/2000/01/rdf-schema#label> ?nome2 .
+    FILTER(CONTAINS(LCASE(STR(?nome2)), "mango"))
+} LIMIT 50
+ 
+[06/10/2026 - 11:14:56]
+Domanda :  "Mostrami preparazioni a base di farina di insetti"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nomeRicetta WHERE {
+    ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+    ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+    ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ingrediente .
+    ?ingrediente <http://www.w3.org/2000/01/rdf-schema#label> ?nome .
+    FILTER(
+        CONTAINS(LCASE(STR(?nome)), "insect") || CONTAINS(LCASE(STR(?nome)), "bug") || CONTAINS(LCASE(STR(?nome)), "cricket") || CONTAINS(LCASE(STR(?nome)), "mealworm")
+    )
+} LIMIT 50
+
+[06/10/2026 - 11:18:36]
+Domanda :  "Quali sono gli ingredienti e le calorie per un mix per torta già pronto?"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nome ?calorie ?proteine ?grassi ?carboidrati WHERE {
+    ?ingrediente <http://www.w3.org/2000/01/rdf-schema#label> ?nome .
+    ?ingrediente <http://tesi.unibs.it/ontology#hasNutritionProfile> ?usda .
+    OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasCalories> ?calorie . }
+    OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasProtein> ?proteine . }
+    OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasFat> ?grassi . }
+    OPTIONAL { ?usda <http://tesi.unibs.it/ontology#hasCarb> ?carboidrati . }
+    FILTER(CONTAINS(LCASE(STR(?nome)), "cake"))
+} LIMIT 50
+ 
+[06/10/2026 - 11:21:45]
+Domanda :  "Trova ricette per una pizza che contenga plutonio"
+Query : 
+PREFIX tesi: <http://tesi.unibs.it/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+SELECT DISTINCT ?nomeRicetta WHERE {
+    ?ricetta <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://tesi.unibs.it/ontology#Recipe> .
+    ?ricetta <http://www.w3.org/2000/01/rdf-schema#label> ?nomeRicetta .
+    ?ricetta <http://tesi.unibs.it/ontology#usesIngredient> ?ingrediente .
+    ?ingrediente <http://www.w3.org/2000/01/rdf-schema#label> ?nomeIngrediente .
+    FILTER(CONTAINS(LCASE(STR(?nomeRicetta)), "pizza"))
+    FILTER(CONTAINS(LCASE(STR(?nomeIngrediente)), "plutonium"))
+} LIMIT 50
